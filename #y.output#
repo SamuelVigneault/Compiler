@@ -1,0 +1,3857 @@
+   0  $accept : Program $end
+
+   1  Program : Decl
+
+   2  Decl : Decl1
+   3       | Decl Decl1
+
+   4  Decl1 : VarDec
+   5        | FuncDec
+
+   6  VarDec : Var T_Semicolon
+
+   7  Var : Type Ident
+
+   8  Type : Type T_LBracket T_RBracket
+   9       | Int
+  10       | Double
+  11       | Bool
+  12       | String
+  13       | TIdent
+
+  14  FuncDec : Type Ident T_LParen Formals T_RParen StmtBlock
+  15          | Void Ident T_LParen Formals T_RParen StmtBlock
+
+  16  Formals : Formals1
+  17          |
+
+  18  Formals1 : Var
+  19           | Formals1 T_Comma Var
+
+  20  StmtBlock : T_LBrace VarDecSt StmtSt T_RBrace
+
+  21  VarDecSt :
+  22           | VarDecSt VarDec
+
+  23  StmtSt :
+  24         | StmtSt Stmt
+
+  25  Stmt : OpenIfStmt
+  26       | Stmt1
+
+  27  Stmt1 : StmtBlock
+  28        | Expr15
+  29        | T_Semicolon
+  30        | ReturnStmt
+  31        | PrintStmt
+  32        | BreakStmt
+  33        | WhileStmt
+  34        | ForStmt
+  35        | MatchedIfStmt
+
+  36  ReturnStmt : Return T_Semicolon
+  37             | Return Expr15
+
+  38  PrintStmt : Print ActualsPrint T_Semicolon
+
+  39  BreakStmt : Break T_Semicolon
+
+  40  ForStmt : ForHeader Stmt
+
+  41  ForHeader : T_For T_LParen Expr15 Expr15 Expr14 T_RParen
+  42            | T_For T_LParen T_Semicolon Expr15 Expr14 T_RParen
+  43            | T_For T_LParen Expr15 Expr15 T_RParen
+  44            | T_For T_LParen T_Semicolon Expr15 T_RParen
+
+  45  WhileStmt : WhileHeader Stmt
+
+  46  WhileHeader : T_While Expr16
+
+  47  OpenIfStmt : IfHeader Stmt
+
+  48  MatchedIfStmt : IfHeader Stmt1 T_Else Stmt
+
+  49  IfHeader : T_If Expr16
+
+  50  ActualsPrint : T_LParen Actuals1 T_RParen
+
+  51  ActualsCall : T_LParen Actuals T_RParen
+
+  52  Actuals :
+  53          | Actuals1
+
+  54  Actuals1 : Expr14
+  55           | Actuals1 T_Comma Expr14
+
+  56  Expr16 : T_LParen Expr14 T_RParen
+
+  57  Expr15 : Expr14 T_Semicolon
+
+  58  Expr14 : LValue Assign Expr13
+  59         | Expr13
+
+  60  Expr13 : Expr11
+  61         | Expr12
+
+  62  Expr12 : Expr12 Or Expr11
+  63         | Expr11 Or Expr11
+
+  64  Expr11 : Expr10
+  65         | Expr9
+
+  66  Expr10 : Expr10 And Expr9
+  67         | Expr9 And Expr9
+
+  68  Expr9 : Expr8
+  69        | Expr7
+
+  70  Expr8 : Expr8 Equal Expr7
+  71        | Expr8 NotEqual Expr7
+  72        | Expr7 Equal Expr7
+  73        | Expr7 NotEqual Expr7
+
+  74  Expr7 : Expr6 LessEqual Expr6
+  75        | Expr6 Less Expr6
+  76        | Expr6 GreaterEqual Expr6
+  77        | Expr6 Greater Expr6
+  78        | Expr6
+
+  79  Expr6 : Expr4
+  80        | Expr5
+
+  81  Expr5 : Expr5 Plus Expr4
+  82        | Expr5 Negat Expr4
+  83        | Expr4 Plus Expr4
+  84        | Expr4 Negat Expr4
+
+  85  Expr4 : Expr3
+  86        | Expr2
+
+  87  Expr3 : Expr3 Mult Expr2
+  88        | Expr3 Div Expr2
+  89        | Expr3 Mod Expr2
+  90        | Expr2 Mult Expr2
+  91        | Expr2 Div Expr2
+  92        | Expr2 Mod Expr2
+
+  93  Expr2 : Negat Expr1
+  94        | Excla Expr1
+  95        | Expr1
+
+  96  Expr1 : LValue
+  97        | Call
+  98        | Expr
+
+  99  Expr : Constant
+ 100       | This
+ 101       | T_LParen Expr T_RParen
+ 102       | T_New T_LParen Ident T_RParen
+ 103       | T_NewArray T_LParen Ident T_Comma Type T_RParen
+ 104       | T_ReadLine T_LParen T_RParen
+ 105       | T_ReadInteger T_LParen T_RParen
+
+ 106  LValue : Ident
+ 107         | FieldA
+ 108         | Expr1 T_LBracket Expr14 T_RBracket
+
+ 109  Call : Ident ActualsCall
+ 110       | FieldA ActualsCall
+
+ 111  FieldA : Expr1 T_Dot Ident
+
+ 112  Constant : IntC
+ 113           | DoubleC
+ 114           | BoolC
+ 115           | StringC
+ 116           | Null
+
+ 117  Print : T_Print
+
+ 118  Break : T_Break
+
+ 119  Return : T_Return
+
+ 120  Less : T_Less
+
+ 121  LessEqual : T_LessEqual
+
+ 122  Greater : T_Greater
+
+ 123  GreaterEqual : T_GreaterEqual
+
+ 124  Assign : T_Assign
+
+ 125  Equal : T_Equal
+
+ 126  NotEqual : T_NotEqual
+
+ 127  And : T_And
+
+ 128  Or : T_Or
+
+ 129  Plus : T_Plus
+
+ 130  Div : T_Div
+
+ 131  Mult : T_Times
+
+ 132  Mod : T_Mod
+
+ 133  Excla : T_Not
+
+ 134  Negat : T_Minus
+
+ 135  Null : T_Null
+
+ 136  This : T_This
+
+ 137  Void : T_Void
+
+ 138  Int : T_Int
+
+ 139  Double : T_Double
+
+ 140  Bool : T_Bool
+
+ 141  String : T_String
+
+ 142  IntC : T_IntConstant
+
+ 143  DoubleC : T_DoubleConstant
+
+ 144  BoolC : T_BoolConstant
+
+ 145  StringC : T_StringConstant
+
+ 146  Ident : T_Identifier
+
+ 147  TIdent : T_TypeIdentifier
+
+state 0
+	$accept : . Program $end  (0)
+
+	T_Void  shift 1
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	.  error
+
+	Program  goto 7
+	Decl  goto 8
+	Decl1  goto 9
+	VarDec  goto 10
+	FuncDec  goto 11
+	Var  goto 12
+	Type  goto 13
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+	Void  goto 19
+
+
+state 1
+	Void : T_Void .  (137)
+
+	.  reduce 137
+
+
+state 2
+	Int : T_Int .  (138)
+
+	.  reduce 138
+
+
+state 3
+	Double : T_Double .  (139)
+
+	.  reduce 139
+
+
+state 4
+	Bool : T_Bool .  (140)
+
+	.  reduce 140
+
+
+state 5
+	String : T_String .  (141)
+
+	.  reduce 141
+
+
+state 6
+	TIdent : T_TypeIdentifier .  (147)
+
+	.  reduce 147
+
+
+state 7
+	$accept : Program . $end  (0)
+
+	$end  accept
+
+
+state 8
+	Program : Decl .  (1)
+	Decl : Decl . Decl1  (3)
+
+	T_Void  shift 1
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	$end  reduce 1
+
+	Decl1  goto 20
+	VarDec  goto 10
+	FuncDec  goto 11
+	Var  goto 12
+	Type  goto 13
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+	Void  goto 19
+
+
+state 9
+	Decl : Decl1 .  (2)
+
+	.  reduce 2
+
+
+state 10
+	Decl1 : VarDec .  (4)
+
+	.  reduce 4
+
+
+state 11
+	Decl1 : FuncDec .  (5)
+
+	.  reduce 5
+
+
+state 12
+	VarDec : Var . T_Semicolon  (6)
+
+	T_Semicolon  shift 21
+	.  error
+
+
+state 13
+	Var : Type . Ident  (7)
+	Type : Type . T_LBracket T_RBracket  (8)
+	FuncDec : Type . Ident T_LParen Formals T_RParen StmtBlock  (14)
+
+	T_Identifier  shift 22
+	T_LBracket  shift 23
+	.  error
+
+	Ident  goto 24
+
+
+state 14
+	Type : Int .  (9)
+
+	.  reduce 9
+
+
+state 15
+	Type : Double .  (10)
+
+	.  reduce 10
+
+
+state 16
+	Type : Bool .  (11)
+
+	.  reduce 11
+
+
+state 17
+	Type : String .  (12)
+
+	.  reduce 12
+
+
+state 18
+	Type : TIdent .  (13)
+
+	.  reduce 13
+
+
+state 19
+	FuncDec : Void . Ident T_LParen Formals T_RParen StmtBlock  (15)
+
+	T_Identifier  shift 22
+	.  error
+
+	Ident  goto 25
+
+
+state 20
+	Decl : Decl Decl1 .  (3)
+
+	.  reduce 3
+
+
+state 21
+	VarDec : Var T_Semicolon .  (6)
+
+	.  reduce 6
+
+
+state 22
+	Ident : T_Identifier .  (146)
+
+	.  reduce 146
+
+
+state 23
+	Type : Type T_LBracket . T_RBracket  (8)
+
+	T_RBracket  shift 26
+	.  error
+
+
+state 24
+	Var : Type Ident .  (7)
+	FuncDec : Type Ident . T_LParen Formals T_RParen StmtBlock  (14)
+
+	T_LParen  shift 27
+	T_Semicolon  reduce 7
+
+
+state 25
+	FuncDec : Void Ident . T_LParen Formals T_RParen StmtBlock  (15)
+
+	T_LParen  shift 28
+	.  error
+
+
+state 26
+	Type : Type T_LBracket T_RBracket .  (8)
+
+	.  reduce 8
+
+
+state 27
+	FuncDec : Type Ident T_LParen . Formals T_RParen StmtBlock  (14)
+	Formals : .  (17)
+
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	T_RParen  reduce 17
+
+	Var  goto 29
+	Type  goto 30
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+	Formals  goto 31
+	Formals1  goto 32
+
+
+state 28
+	FuncDec : Void Ident T_LParen . Formals T_RParen StmtBlock  (15)
+	Formals : .  (17)
+
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	T_RParen  reduce 17
+
+	Var  goto 29
+	Type  goto 30
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+	Formals  goto 33
+	Formals1  goto 32
+
+
+state 29
+	Formals1 : Var .  (18)
+
+	.  reduce 18
+
+
+state 30
+	Var : Type . Ident  (7)
+	Type : Type . T_LBracket T_RBracket  (8)
+
+	T_Identifier  shift 22
+	T_LBracket  shift 23
+	.  error
+
+	Ident  goto 34
+
+
+state 31
+	FuncDec : Type Ident T_LParen Formals . T_RParen StmtBlock  (14)
+
+	T_RParen  shift 35
+	.  error
+
+
+state 32
+	Formals : Formals1 .  (16)
+	Formals1 : Formals1 . T_Comma Var  (19)
+
+	T_Comma  shift 36
+	T_RParen  reduce 16
+
+
+state 33
+	FuncDec : Void Ident T_LParen Formals . T_RParen StmtBlock  (15)
+
+	T_RParen  shift 37
+	.  error
+
+
+state 34
+	Var : Type Ident .  (7)
+
+	.  reduce 7
+
+
+state 35
+	FuncDec : Type Ident T_LParen Formals T_RParen . StmtBlock  (14)
+
+	T_LBrace  shift 38
+	.  error
+
+	StmtBlock  goto 39
+
+
+state 36
+	Formals1 : Formals1 T_Comma . Var  (19)
+
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	.  error
+
+	Var  goto 40
+	Type  goto 30
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+
+
+state 37
+	FuncDec : Void Ident T_LParen Formals T_RParen . StmtBlock  (15)
+
+	T_LBrace  shift 38
+	.  error
+
+	StmtBlock  goto 41
+
+
+state 38
+	StmtBlock : T_LBrace . VarDecSt StmtSt T_RBrace  (20)
+	VarDecSt : .  (21)
+
+	.  reduce 21
+
+	VarDecSt  goto 42
+
+
+state 39
+	FuncDec : Type Ident T_LParen Formals T_RParen StmtBlock .  (14)
+
+	.  reduce 14
+
+
+state 40
+	Formals1 : Formals1 T_Comma Var .  (19)
+
+	.  reduce 19
+
+
+state 41
+	FuncDec : Void Ident T_LParen Formals T_RParen StmtBlock .  (15)
+
+	.  reduce 15
+
+
+state 42
+	StmtBlock : T_LBrace VarDecSt . StmtSt T_RBrace  (20)
+	VarDecSt : VarDecSt . VarDec  (22)
+	StmtSt : .  (23)
+
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	T_Null  reduce 23
+	T_This  reduce 23
+	T_For  reduce 23
+	T_While  reduce 23
+	T_If  reduce 23
+	T_Return  reduce 23
+	T_Break  reduce 23
+	T_New  reduce 23
+	T_NewArray  reduce 23
+	T_Print  reduce 23
+	T_ReadInteger  reduce 23
+	T_ReadLine  reduce 23
+	T_Identifier  reduce 23
+	T_IntConstant  reduce 23
+	T_BoolConstant  reduce 23
+	T_DoubleConstant  reduce 23
+	T_StringConstant  reduce 23
+	T_Minus  reduce 23
+	T_Not  reduce 23
+	T_Semicolon  reduce 23
+	T_LParen  reduce 23
+	T_LBrace  reduce 23
+	T_RBrace  reduce 23
+
+	VarDec  goto 43
+	Var  goto 12
+	Type  goto 30
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+	StmtSt  goto 44
+
+
+state 43
+	VarDecSt : VarDecSt VarDec .  (22)
+
+	.  reduce 22
+
+
+state 44
+	StmtBlock : T_LBrace VarDecSt StmtSt . T_RBrace  (20)
+	StmtSt : StmtSt . Stmt  (24)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_For  shift 47
+	T_While  shift 48
+	T_If  shift 49
+	T_Return  shift 50
+	T_Break  shift 51
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_Print  shift 54
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 63
+	T_LParen  shift 64
+	T_LBrace  shift 38
+	T_RBrace  shift 65
+	.  error
+
+	Ident  goto 66
+	StmtBlock  goto 67
+	Stmt  goto 68
+	OpenIfStmt  goto 69
+	Stmt1  goto 70
+	Expr15  goto 71
+	ReturnStmt  goto 72
+	PrintStmt  goto 73
+	BreakStmt  goto 74
+	WhileStmt  goto 75
+	ForStmt  goto 76
+	MatchedIfStmt  goto 77
+	Return  goto 78
+	Print  goto 79
+	Break  goto 80
+	ForHeader  goto 81
+	Expr14  goto 82
+	WhileHeader  goto 83
+	IfHeader  goto 84
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 45
+	Null : T_Null .  (135)
+
+	.  reduce 135
+
+
+state 46
+	This : T_This .  (136)
+
+	.  reduce 136
+
+
+state 47
+	ForHeader : T_For . T_LParen Expr15 Expr15 Expr14 T_RParen  (41)
+	ForHeader : T_For . T_LParen T_Semicolon Expr15 Expr14 T_RParen  (42)
+	ForHeader : T_For . T_LParen Expr15 Expr15 T_RParen  (43)
+	ForHeader : T_For . T_LParen T_Semicolon Expr15 T_RParen  (44)
+
+	T_LParen  shift 111
+	.  error
+
+
+state 48
+	WhileHeader : T_While . Expr16  (46)
+
+	T_LParen  shift 112
+	.  error
+
+	Expr16  goto 113
+
+
+state 49
+	IfHeader : T_If . Expr16  (49)
+
+	T_LParen  shift 112
+	.  error
+
+	Expr16  goto 114
+
+
+state 50
+	Return : T_Return .  (119)
+
+	.  reduce 119
+
+
+state 51
+	Break : T_Break .  (118)
+
+	.  reduce 118
+
+
+state 52
+	Expr : T_New . T_LParen Ident T_RParen  (102)
+
+	T_LParen  shift 115
+	.  error
+
+
+state 53
+	Expr : T_NewArray . T_LParen Ident T_Comma Type T_RParen  (103)
+
+	T_LParen  shift 116
+	.  error
+
+
+state 54
+	Print : T_Print .  (117)
+
+	.  reduce 117
+
+
+state 55
+	Expr : T_ReadInteger . T_LParen T_RParen  (105)
+
+	T_LParen  shift 117
+	.  error
+
+
+state 56
+	Expr : T_ReadLine . T_LParen T_RParen  (104)
+
+	T_LParen  shift 118
+	.  error
+
+
+state 57
+	IntC : T_IntConstant .  (142)
+
+	.  reduce 142
+
+
+state 58
+	BoolC : T_BoolConstant .  (144)
+
+	.  reduce 144
+
+
+state 59
+	DoubleC : T_DoubleConstant .  (143)
+
+	.  reduce 143
+
+
+state 60
+	StringC : T_StringConstant .  (145)
+
+	.  reduce 145
+
+
+state 61
+	Negat : T_Minus .  (134)
+
+	.  reduce 134
+
+
+state 62
+	Excla : T_Not .  (133)
+
+	.  reduce 133
+
+
+state 63
+	Stmt1 : T_Semicolon .  (29)
+
+	.  reduce 29
+
+
+state 64
+	Expr : T_LParen . Expr T_RParen  (101)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_LParen  shift 64
+	.  error
+
+	Expr  goto 119
+	Constant  goto 103
+	This  goto 104
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 65
+	StmtBlock : T_LBrace VarDecSt StmtSt T_RBrace .  (20)
+
+	.  reduce 20
+
+
+state 66
+	LValue : Ident .  (106)
+	Call : Ident . ActualsCall  (109)
+
+	T_LParen  shift 120
+	T_Plus  reduce 106
+	T_Minus  reduce 106
+	T_Times  reduce 106
+	T_Div  reduce 106
+	T_Mod  reduce 106
+	T_Less  reduce 106
+	T_LessEqual  reduce 106
+	T_Greater  reduce 106
+	T_GreaterEqual  reduce 106
+	T_Assign  reduce 106
+	T_Equal  reduce 106
+	T_NotEqual  reduce 106
+	T_And  reduce 106
+	T_Or  reduce 106
+	T_Semicolon  reduce 106
+	T_Comma  reduce 106
+	T_Dot  reduce 106
+	T_LBracket  reduce 106
+	T_RBracket  reduce 106
+	T_RParen  reduce 106
+
+	ActualsCall  goto 121
+
+
+state 67
+	Stmt1 : StmtBlock .  (27)
+
+	.  reduce 27
+
+
+state 68
+	StmtSt : StmtSt Stmt .  (24)
+
+	.  reduce 24
+
+
+state 69
+	Stmt : OpenIfStmt .  (25)
+
+	.  reduce 25
+
+
+state 70
+	Stmt : Stmt1 .  (26)
+
+	.  reduce 26
+
+
+state 71
+	Stmt1 : Expr15 .  (28)
+
+	.  reduce 28
+
+
+state 72
+	Stmt1 : ReturnStmt .  (30)
+
+	.  reduce 30
+
+
+state 73
+	Stmt1 : PrintStmt .  (31)
+
+	.  reduce 31
+
+
+state 74
+	Stmt1 : BreakStmt .  (32)
+
+	.  reduce 32
+
+
+state 75
+	Stmt1 : WhileStmt .  (33)
+
+	.  reduce 33
+
+
+state 76
+	Stmt1 : ForStmt .  (34)
+
+	.  reduce 34
+
+
+state 77
+	Stmt1 : MatchedIfStmt .  (35)
+
+	.  reduce 35
+
+
+state 78
+	ReturnStmt : Return . T_Semicolon  (36)
+	ReturnStmt : Return . Expr15  (37)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 122
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr15  goto 123
+	Expr14  goto 82
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 79
+	PrintStmt : Print . ActualsPrint T_Semicolon  (38)
+
+	T_LParen  shift 124
+	.  error
+
+	ActualsPrint  goto 125
+
+
+state 80
+	BreakStmt : Break . T_Semicolon  (39)
+
+	T_Semicolon  shift 126
+	.  error
+
+
+state 81
+	ForStmt : ForHeader . Stmt  (40)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_For  shift 47
+	T_While  shift 48
+	T_If  shift 49
+	T_Return  shift 50
+	T_Break  shift 51
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_Print  shift 54
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 63
+	T_LParen  shift 64
+	T_LBrace  shift 38
+	.  error
+
+	Ident  goto 66
+	StmtBlock  goto 67
+	Stmt  goto 127
+	OpenIfStmt  goto 69
+	Stmt1  goto 70
+	Expr15  goto 71
+	ReturnStmt  goto 72
+	PrintStmt  goto 73
+	BreakStmt  goto 74
+	WhileStmt  goto 75
+	ForStmt  goto 76
+	MatchedIfStmt  goto 77
+	Return  goto 78
+	Print  goto 79
+	Break  goto 80
+	ForHeader  goto 81
+	Expr14  goto 82
+	WhileHeader  goto 83
+	IfHeader  goto 84
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 82
+	Expr15 : Expr14 . T_Semicolon  (57)
+
+	T_Semicolon  shift 128
+	.  error
+
+
+state 83
+	WhileStmt : WhileHeader . Stmt  (45)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_For  shift 47
+	T_While  shift 48
+	T_If  shift 49
+	T_Return  shift 50
+	T_Break  shift 51
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_Print  shift 54
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 63
+	T_LParen  shift 64
+	T_LBrace  shift 38
+	.  error
+
+	Ident  goto 66
+	StmtBlock  goto 67
+	Stmt  goto 129
+	OpenIfStmt  goto 69
+	Stmt1  goto 70
+	Expr15  goto 71
+	ReturnStmt  goto 72
+	PrintStmt  goto 73
+	BreakStmt  goto 74
+	WhileStmt  goto 75
+	ForStmt  goto 76
+	MatchedIfStmt  goto 77
+	Return  goto 78
+	Print  goto 79
+	Break  goto 80
+	ForHeader  goto 81
+	Expr14  goto 82
+	WhileHeader  goto 83
+	IfHeader  goto 84
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 84
+	OpenIfStmt : IfHeader . Stmt  (47)
+	MatchedIfStmt : IfHeader . Stmt1 T_Else Stmt  (48)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_For  shift 47
+	T_While  shift 48
+	T_If  shift 49
+	T_Return  shift 50
+	T_Break  shift 51
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_Print  shift 54
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 63
+	T_LParen  shift 64
+	T_LBrace  shift 38
+	.  error
+
+	Ident  goto 66
+	StmtBlock  goto 67
+	Stmt  goto 130
+	OpenIfStmt  goto 69
+	Stmt1  goto 131
+	Expr15  goto 71
+	ReturnStmt  goto 72
+	PrintStmt  goto 73
+	BreakStmt  goto 74
+	WhileStmt  goto 75
+	ForStmt  goto 76
+	MatchedIfStmt  goto 77
+	Return  goto 78
+	Print  goto 79
+	Break  goto 80
+	ForHeader  goto 81
+	Expr14  goto 82
+	WhileHeader  goto 83
+	IfHeader  goto 84
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 85
+	Expr14 : LValue . Assign Expr13  (58)
+	Expr1 : LValue .  (96)
+
+	T_Assign  shift 132
+	T_Plus  reduce 96
+	T_Minus  reduce 96
+	T_Times  reduce 96
+	T_Div  reduce 96
+	T_Mod  reduce 96
+	T_Less  reduce 96
+	T_LessEqual  reduce 96
+	T_Greater  reduce 96
+	T_GreaterEqual  reduce 96
+	T_Equal  reduce 96
+	T_NotEqual  reduce 96
+	T_And  reduce 96
+	T_Or  reduce 96
+	T_Semicolon  reduce 96
+	T_Comma  reduce 96
+	T_Dot  reduce 96
+	T_LBracket  reduce 96
+	T_RBracket  reduce 96
+	T_RParen  reduce 96
+
+	Assign  goto 133
+
+
+state 86
+	Expr14 : Expr13 .  (59)
+
+	.  reduce 59
+
+
+state 87
+	Expr13 : Expr11 .  (60)
+	Expr12 : Expr11 . Or Expr11  (63)
+
+	T_Or  shift 134
+	T_Semicolon  reduce 60
+	T_Comma  reduce 60
+	T_RBracket  reduce 60
+	T_RParen  reduce 60
+
+	Or  goto 135
+
+
+state 88
+	Expr13 : Expr12 .  (61)
+	Expr12 : Expr12 . Or Expr11  (62)
+
+	T_Or  shift 134
+	T_Semicolon  reduce 61
+	T_Comma  reduce 61
+	T_RBracket  reduce 61
+	T_RParen  reduce 61
+
+	Or  goto 136
+
+
+state 89
+	Expr11 : Expr10 .  (64)
+	Expr10 : Expr10 . And Expr9  (66)
+
+	T_And  shift 137
+	T_Or  reduce 64
+	T_Semicolon  reduce 64
+	T_Comma  reduce 64
+	T_RBracket  reduce 64
+	T_RParen  reduce 64
+
+	And  goto 138
+
+
+state 90
+	Expr11 : Expr9 .  (65)
+	Expr10 : Expr9 . And Expr9  (67)
+
+	T_And  shift 137
+	T_Or  reduce 65
+	T_Semicolon  reduce 65
+	T_Comma  reduce 65
+	T_RBracket  reduce 65
+	T_RParen  reduce 65
+
+	And  goto 139
+
+
+state 91
+	Expr9 : Expr8 .  (68)
+	Expr8 : Expr8 . Equal Expr7  (70)
+	Expr8 : Expr8 . NotEqual Expr7  (71)
+
+	T_Equal  shift 140
+	T_NotEqual  shift 141
+	T_And  reduce 68
+	T_Or  reduce 68
+	T_Semicolon  reduce 68
+	T_Comma  reduce 68
+	T_RBracket  reduce 68
+	T_RParen  reduce 68
+
+	Equal  goto 142
+	NotEqual  goto 143
+
+
+state 92
+	Expr9 : Expr7 .  (69)
+	Expr8 : Expr7 . Equal Expr7  (72)
+	Expr8 : Expr7 . NotEqual Expr7  (73)
+
+	T_Equal  shift 140
+	T_NotEqual  shift 141
+	T_And  reduce 69
+	T_Or  reduce 69
+	T_Semicolon  reduce 69
+	T_Comma  reduce 69
+	T_RBracket  reduce 69
+	T_RParen  reduce 69
+
+	Equal  goto 144
+	NotEqual  goto 145
+
+
+state 93
+	Expr7 : Expr6 . LessEqual Expr6  (74)
+	Expr7 : Expr6 . Less Expr6  (75)
+	Expr7 : Expr6 . GreaterEqual Expr6  (76)
+	Expr7 : Expr6 . Greater Expr6  (77)
+	Expr7 : Expr6 .  (78)
+
+	T_Less  shift 146
+	T_LessEqual  shift 147
+	T_Greater  shift 148
+	T_GreaterEqual  shift 149
+	T_Equal  reduce 78
+	T_NotEqual  reduce 78
+	T_And  reduce 78
+	T_Or  reduce 78
+	T_Semicolon  reduce 78
+	T_Comma  reduce 78
+	T_RBracket  reduce 78
+	T_RParen  reduce 78
+
+	LessEqual  goto 150
+	Less  goto 151
+	GreaterEqual  goto 152
+	Greater  goto 153
+
+
+state 94
+	Expr6 : Expr4 .  (79)
+	Expr5 : Expr4 . Plus Expr4  (83)
+	Expr5 : Expr4 . Negat Expr4  (84)
+
+	T_Plus  shift 154
+	T_Minus  shift 61
+	T_Less  reduce 79
+	T_LessEqual  reduce 79
+	T_Greater  reduce 79
+	T_GreaterEqual  reduce 79
+	T_Equal  reduce 79
+	T_NotEqual  reduce 79
+	T_And  reduce 79
+	T_Or  reduce 79
+	T_Semicolon  reduce 79
+	T_Comma  reduce 79
+	T_RBracket  reduce 79
+	T_RParen  reduce 79
+
+	Plus  goto 155
+	Negat  goto 156
+
+
+state 95
+	Expr6 : Expr5 .  (80)
+	Expr5 : Expr5 . Plus Expr4  (81)
+	Expr5 : Expr5 . Negat Expr4  (82)
+
+	T_Plus  shift 154
+	T_Minus  shift 61
+	T_Less  reduce 80
+	T_LessEqual  reduce 80
+	T_Greater  reduce 80
+	T_GreaterEqual  reduce 80
+	T_Equal  reduce 80
+	T_NotEqual  reduce 80
+	T_And  reduce 80
+	T_Or  reduce 80
+	T_Semicolon  reduce 80
+	T_Comma  reduce 80
+	T_RBracket  reduce 80
+	T_RParen  reduce 80
+
+	Plus  goto 157
+	Negat  goto 158
+
+
+state 96
+	Expr2 : Negat . Expr1  (93)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr1  goto 160
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 97
+	Expr4 : Expr3 .  (85)
+	Expr3 : Expr3 . Mult Expr2  (87)
+	Expr3 : Expr3 . Div Expr2  (88)
+	Expr3 : Expr3 . Mod Expr2  (89)
+
+	T_Times  shift 161
+	T_Div  shift 162
+	T_Mod  shift 163
+	T_Plus  reduce 85
+	T_Minus  reduce 85
+	T_Less  reduce 85
+	T_LessEqual  reduce 85
+	T_Greater  reduce 85
+	T_GreaterEqual  reduce 85
+	T_Equal  reduce 85
+	T_NotEqual  reduce 85
+	T_And  reduce 85
+	T_Or  reduce 85
+	T_Semicolon  reduce 85
+	T_Comma  reduce 85
+	T_RBracket  reduce 85
+	T_RParen  reduce 85
+
+	Mult  goto 164
+	Div  goto 165
+	Mod  goto 166
+
+
+state 98
+	Expr4 : Expr2 .  (86)
+	Expr3 : Expr2 . Mult Expr2  (90)
+	Expr3 : Expr2 . Div Expr2  (91)
+	Expr3 : Expr2 . Mod Expr2  (92)
+
+	T_Times  shift 161
+	T_Div  shift 162
+	T_Mod  shift 163
+	T_Plus  reduce 86
+	T_Minus  reduce 86
+	T_Less  reduce 86
+	T_LessEqual  reduce 86
+	T_Greater  reduce 86
+	T_GreaterEqual  reduce 86
+	T_Equal  reduce 86
+	T_NotEqual  reduce 86
+	T_And  reduce 86
+	T_Or  reduce 86
+	T_Semicolon  reduce 86
+	T_Comma  reduce 86
+	T_RBracket  reduce 86
+	T_RParen  reduce 86
+
+	Mult  goto 167
+	Div  goto 168
+	Mod  goto 169
+
+
+state 99
+	Expr2 : Expr1 .  (95)
+	LValue : Expr1 . T_LBracket Expr14 T_RBracket  (108)
+	FieldA : Expr1 . T_Dot Ident  (111)
+
+	T_Dot  shift 170
+	T_LBracket  shift 171
+	T_Plus  reduce 95
+	T_Minus  reduce 95
+	T_Times  reduce 95
+	T_Div  reduce 95
+	T_Mod  reduce 95
+	T_Less  reduce 95
+	T_LessEqual  reduce 95
+	T_Greater  reduce 95
+	T_GreaterEqual  reduce 95
+	T_Equal  reduce 95
+	T_NotEqual  reduce 95
+	T_And  reduce 95
+	T_Or  reduce 95
+	T_Semicolon  reduce 95
+	T_Comma  reduce 95
+	T_RBracket  reduce 95
+	T_RParen  reduce 95
+
+
+state 100
+	Expr2 : Excla . Expr1  (94)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr1  goto 172
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 101
+	Expr1 : Call .  (97)
+
+	.  reduce 97
+
+
+state 102
+	Expr1 : Expr .  (98)
+
+	.  reduce 98
+
+
+state 103
+	Expr : Constant .  (99)
+
+	.  reduce 99
+
+
+state 104
+	Expr : This .  (100)
+
+	.  reduce 100
+
+
+state 105
+	LValue : FieldA .  (107)
+	Call : FieldA . ActualsCall  (110)
+
+	T_LParen  shift 120
+	T_Plus  reduce 107
+	T_Minus  reduce 107
+	T_Times  reduce 107
+	T_Div  reduce 107
+	T_Mod  reduce 107
+	T_Less  reduce 107
+	T_LessEqual  reduce 107
+	T_Greater  reduce 107
+	T_GreaterEqual  reduce 107
+	T_Assign  reduce 107
+	T_Equal  reduce 107
+	T_NotEqual  reduce 107
+	T_And  reduce 107
+	T_Or  reduce 107
+	T_Semicolon  reduce 107
+	T_Comma  reduce 107
+	T_Dot  reduce 107
+	T_LBracket  reduce 107
+	T_RBracket  reduce 107
+	T_RParen  reduce 107
+
+	ActualsCall  goto 173
+
+
+state 106
+	Constant : IntC .  (112)
+
+	.  reduce 112
+
+
+state 107
+	Constant : DoubleC .  (113)
+
+	.  reduce 113
+
+
+state 108
+	Constant : BoolC .  (114)
+
+	.  reduce 114
+
+
+state 109
+	Constant : StringC .  (115)
+
+	.  reduce 115
+
+
+state 110
+	Constant : Null .  (116)
+
+	.  reduce 116
+
+
+state 111
+	ForHeader : T_For T_LParen . Expr15 Expr15 Expr14 T_RParen  (41)
+	ForHeader : T_For T_LParen . T_Semicolon Expr15 Expr14 T_RParen  (42)
+	ForHeader : T_For T_LParen . Expr15 Expr15 T_RParen  (43)
+	ForHeader : T_For T_LParen . T_Semicolon Expr15 T_RParen  (44)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 174
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr15  goto 175
+	Expr14  goto 82
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 112
+	Expr16 : T_LParen . Expr14 T_RParen  (56)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr14  goto 176
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 113
+	WhileHeader : T_While Expr16 .  (46)
+
+	.  reduce 46
+
+
+state 114
+	IfHeader : T_If Expr16 .  (49)
+
+	.  reduce 49
+
+
+state 115
+	Expr : T_New T_LParen . Ident T_RParen  (102)
+
+	T_Identifier  shift 22
+	.  error
+
+	Ident  goto 177
+
+
+state 116
+	Expr : T_NewArray T_LParen . Ident T_Comma Type T_RParen  (103)
+
+	T_Identifier  shift 22
+	.  error
+
+	Ident  goto 178
+
+
+state 117
+	Expr : T_ReadInteger T_LParen . T_RParen  (105)
+
+	T_RParen  shift 179
+	.  error
+
+
+state 118
+	Expr : T_ReadLine T_LParen . T_RParen  (104)
+
+	T_RParen  shift 180
+	.  error
+
+
+state 119
+	Expr : T_LParen Expr . T_RParen  (101)
+
+	T_RParen  shift 181
+	.  error
+
+
+state 120
+	ActualsCall : T_LParen . Actuals T_RParen  (51)
+	Actuals : .  (52)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	T_RParen  reduce 52
+
+	Ident  goto 66
+	Expr14  goto 182
+	Actuals1  goto 183
+	Actuals  goto 184
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 121
+	Call : Ident ActualsCall .  (109)
+
+	.  reduce 109
+
+
+state 122
+	ReturnStmt : Return T_Semicolon .  (36)
+
+	.  reduce 36
+
+
+state 123
+	ReturnStmt : Return Expr15 .  (37)
+
+	.  reduce 37
+
+
+state 124
+	ActualsPrint : T_LParen . Actuals1 T_RParen  (50)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr14  goto 182
+	Actuals1  goto 185
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 125
+	PrintStmt : Print ActualsPrint . T_Semicolon  (38)
+
+	T_Semicolon  shift 186
+	.  error
+
+
+state 126
+	BreakStmt : Break T_Semicolon .  (39)
+
+	.  reduce 39
+
+
+state 127
+	ForStmt : ForHeader Stmt .  (40)
+
+	.  reduce 40
+
+
+state 128
+	Expr15 : Expr14 T_Semicolon .  (57)
+
+	.  reduce 57
+
+
+state 129
+	WhileStmt : WhileHeader Stmt .  (45)
+
+	.  reduce 45
+
+
+state 130
+	OpenIfStmt : IfHeader Stmt .  (47)
+
+	.  reduce 47
+
+
+131: shift/reduce conflict (shift 187, reduce 26) on T_Else
+state 131
+	Stmt : Stmt1 .  (26)
+	MatchedIfStmt : IfHeader Stmt1 . T_Else Stmt  (48)
+
+	T_Else  shift 187
+	T_Null  reduce 26
+	T_This  reduce 26
+	T_For  reduce 26
+	T_While  reduce 26
+	T_If  reduce 26
+	T_Return  reduce 26
+	T_Break  reduce 26
+	T_New  reduce 26
+	T_NewArray  reduce 26
+	T_Print  reduce 26
+	T_ReadInteger  reduce 26
+	T_ReadLine  reduce 26
+	T_Identifier  reduce 26
+	T_IntConstant  reduce 26
+	T_BoolConstant  reduce 26
+	T_DoubleConstant  reduce 26
+	T_StringConstant  reduce 26
+	T_Minus  reduce 26
+	T_Not  reduce 26
+	T_Semicolon  reduce 26
+	T_LParen  reduce 26
+	T_LBrace  reduce 26
+	T_RBrace  reduce 26
+
+
+state 132
+	Assign : T_Assign .  (124)
+
+	.  reduce 124
+
+
+state 133
+	Expr14 : LValue Assign . Expr13  (58)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr13  goto 188
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 134
+	Or : T_Or .  (128)
+
+	.  reduce 128
+
+
+state 135
+	Expr12 : Expr11 Or . Expr11  (63)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr11  goto 189
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 136
+	Expr12 : Expr12 Or . Expr11  (62)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr11  goto 190
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 137
+	And : T_And .  (127)
+
+	.  reduce 127
+
+
+state 138
+	Expr10 : Expr10 And . Expr9  (66)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr9  goto 191
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 139
+	Expr10 : Expr9 And . Expr9  (67)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr9  goto 192
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 140
+	Equal : T_Equal .  (125)
+
+	.  reduce 125
+
+
+state 141
+	NotEqual : T_NotEqual .  (126)
+
+	.  reduce 126
+
+
+state 142
+	Expr8 : Expr8 Equal . Expr7  (70)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr7  goto 193
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 143
+	Expr8 : Expr8 NotEqual . Expr7  (71)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr7  goto 194
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 144
+	Expr8 : Expr7 Equal . Expr7  (72)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr7  goto 195
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 145
+	Expr8 : Expr7 NotEqual . Expr7  (73)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr7  goto 196
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 146
+	Less : T_Less .  (120)
+
+	.  reduce 120
+
+
+state 147
+	LessEqual : T_LessEqual .  (121)
+
+	.  reduce 121
+
+
+state 148
+	Greater : T_Greater .  (122)
+
+	.  reduce 122
+
+
+state 149
+	GreaterEqual : T_GreaterEqual .  (123)
+
+	.  reduce 123
+
+
+state 150
+	Expr7 : Expr6 LessEqual . Expr6  (74)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr6  goto 197
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 151
+	Expr7 : Expr6 Less . Expr6  (75)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr6  goto 198
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 152
+	Expr7 : Expr6 GreaterEqual . Expr6  (76)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr6  goto 199
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 153
+	Expr7 : Expr6 Greater . Expr6  (77)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr6  goto 200
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 154
+	Plus : T_Plus .  (129)
+
+	.  reduce 129
+
+
+state 155
+	Expr5 : Expr4 Plus . Expr4  (83)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr4  goto 201
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 156
+	Expr5 : Expr4 Negat . Expr4  (84)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr4  goto 202
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 157
+	Expr5 : Expr5 Plus . Expr4  (81)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr4  goto 203
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 158
+	Expr5 : Expr5 Negat . Expr4  (82)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Expr4  goto 204
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 159
+	Expr1 : LValue .  (96)
+
+	.  reduce 96
+
+
+state 160
+	Expr2 : Negat Expr1 .  (93)
+	LValue : Expr1 . T_LBracket Expr14 T_RBracket  (108)
+	FieldA : Expr1 . T_Dot Ident  (111)
+
+	T_Dot  shift 170
+	T_LBracket  shift 171
+	T_Plus  reduce 93
+	T_Minus  reduce 93
+	T_Times  reduce 93
+	T_Div  reduce 93
+	T_Mod  reduce 93
+	T_Less  reduce 93
+	T_LessEqual  reduce 93
+	T_Greater  reduce 93
+	T_GreaterEqual  reduce 93
+	T_Equal  reduce 93
+	T_NotEqual  reduce 93
+	T_And  reduce 93
+	T_Or  reduce 93
+	T_Semicolon  reduce 93
+	T_Comma  reduce 93
+	T_RBracket  reduce 93
+	T_RParen  reduce 93
+
+
+state 161
+	Mult : T_Times .  (131)
+
+	.  reduce 131
+
+
+state 162
+	Div : T_Div .  (130)
+
+	.  reduce 130
+
+
+state 163
+	Mod : T_Mod .  (132)
+
+	.  reduce 132
+
+
+state 164
+	Expr3 : Expr3 Mult . Expr2  (87)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Negat  goto 96
+	Expr2  goto 205
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 165
+	Expr3 : Expr3 Div . Expr2  (88)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Negat  goto 96
+	Expr2  goto 206
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 166
+	Expr3 : Expr3 Mod . Expr2  (89)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Negat  goto 96
+	Expr2  goto 207
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 167
+	Expr3 : Expr2 Mult . Expr2  (90)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Negat  goto 96
+	Expr2  goto 208
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 168
+	Expr3 : Expr2 Div . Expr2  (91)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Negat  goto 96
+	Expr2  goto 209
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 169
+	Expr3 : Expr2 Mod . Expr2  (92)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	LValue  goto 159
+	Negat  goto 96
+	Expr2  goto 210
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 170
+	FieldA : Expr1 T_Dot . Ident  (111)
+
+	T_Identifier  shift 22
+	.  error
+
+	Ident  goto 211
+
+
+state 171
+	LValue : Expr1 T_LBracket . Expr14 T_RBracket  (108)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr14  goto 212
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 172
+	Expr2 : Excla Expr1 .  (94)
+	LValue : Expr1 . T_LBracket Expr14 T_RBracket  (108)
+	FieldA : Expr1 . T_Dot Ident  (111)
+
+	T_Dot  shift 170
+	T_LBracket  shift 171
+	T_Plus  reduce 94
+	T_Minus  reduce 94
+	T_Times  reduce 94
+	T_Div  reduce 94
+	T_Mod  reduce 94
+	T_Less  reduce 94
+	T_LessEqual  reduce 94
+	T_Greater  reduce 94
+	T_GreaterEqual  reduce 94
+	T_Equal  reduce 94
+	T_NotEqual  reduce 94
+	T_And  reduce 94
+	T_Or  reduce 94
+	T_Semicolon  reduce 94
+	T_Comma  reduce 94
+	T_RBracket  reduce 94
+	T_RParen  reduce 94
+
+
+state 173
+	Call : FieldA ActualsCall .  (110)
+
+	.  reduce 110
+
+
+state 174
+	ForHeader : T_For T_LParen T_Semicolon . Expr15 Expr14 T_RParen  (42)
+	ForHeader : T_For T_LParen T_Semicolon . Expr15 T_RParen  (44)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr15  goto 213
+	Expr14  goto 82
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 175
+	ForHeader : T_For T_LParen Expr15 . Expr15 Expr14 T_RParen  (41)
+	ForHeader : T_For T_LParen Expr15 . Expr15 T_RParen  (43)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr15  goto 214
+	Expr14  goto 82
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 176
+	Expr16 : T_LParen Expr14 . T_RParen  (56)
+
+	T_RParen  shift 215
+	.  error
+
+
+state 177
+	Expr : T_New T_LParen Ident . T_RParen  (102)
+
+	T_RParen  shift 216
+	.  error
+
+
+state 178
+	Expr : T_NewArray T_LParen Ident . T_Comma Type T_RParen  (103)
+
+	T_Comma  shift 217
+	.  error
+
+
+state 179
+	Expr : T_ReadInteger T_LParen T_RParen .  (105)
+
+	.  reduce 105
+
+
+state 180
+	Expr : T_ReadLine T_LParen T_RParen .  (104)
+
+	.  reduce 104
+
+
+state 181
+	Expr : T_LParen Expr T_RParen .  (101)
+
+	.  reduce 101
+
+
+state 182
+	Actuals1 : Expr14 .  (54)
+
+	.  reduce 54
+
+
+state 183
+	Actuals : Actuals1 .  (53)
+	Actuals1 : Actuals1 . T_Comma Expr14  (55)
+
+	T_Comma  shift 218
+	T_RParen  reduce 53
+
+
+state 184
+	ActualsCall : T_LParen Actuals . T_RParen  (51)
+
+	T_RParen  shift 219
+	.  error
+
+
+state 185
+	ActualsPrint : T_LParen Actuals1 . T_RParen  (50)
+	Actuals1 : Actuals1 . T_Comma Expr14  (55)
+
+	T_Comma  shift 218
+	T_RParen  shift 220
+	.  error
+
+
+state 186
+	PrintStmt : Print ActualsPrint T_Semicolon .  (38)
+
+	.  reduce 38
+
+
+state 187
+	MatchedIfStmt : IfHeader Stmt1 T_Else . Stmt  (48)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_For  shift 47
+	T_While  shift 48
+	T_If  shift 49
+	T_Return  shift 50
+	T_Break  shift 51
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_Print  shift 54
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_Semicolon  shift 63
+	T_LParen  shift 64
+	T_LBrace  shift 38
+	.  error
+
+	Ident  goto 66
+	StmtBlock  goto 67
+	Stmt  goto 221
+	OpenIfStmt  goto 69
+	Stmt1  goto 70
+	Expr15  goto 71
+	ReturnStmt  goto 72
+	PrintStmt  goto 73
+	BreakStmt  goto 74
+	WhileStmt  goto 75
+	ForStmt  goto 76
+	MatchedIfStmt  goto 77
+	Return  goto 78
+	Print  goto 79
+	Break  goto 80
+	ForHeader  goto 81
+	Expr14  goto 82
+	WhileHeader  goto 83
+	IfHeader  goto 84
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 188
+	Expr14 : LValue Assign Expr13 .  (58)
+
+	.  reduce 58
+
+
+state 189
+	Expr12 : Expr11 Or Expr11 .  (63)
+
+	.  reduce 63
+
+
+state 190
+	Expr12 : Expr12 Or Expr11 .  (62)
+
+	.  reduce 62
+
+
+state 191
+	Expr10 : Expr10 And Expr9 .  (66)
+
+	.  reduce 66
+
+
+state 192
+	Expr10 : Expr9 And Expr9 .  (67)
+
+	.  reduce 67
+
+
+state 193
+	Expr8 : Expr8 Equal Expr7 .  (70)
+
+	.  reduce 70
+
+
+state 194
+	Expr8 : Expr8 NotEqual Expr7 .  (71)
+
+	.  reduce 71
+
+
+state 195
+	Expr8 : Expr7 Equal Expr7 .  (72)
+
+	.  reduce 72
+
+
+state 196
+	Expr8 : Expr7 NotEqual Expr7 .  (73)
+
+	.  reduce 73
+
+
+state 197
+	Expr7 : Expr6 LessEqual Expr6 .  (74)
+
+	.  reduce 74
+
+
+state 198
+	Expr7 : Expr6 Less Expr6 .  (75)
+
+	.  reduce 75
+
+
+state 199
+	Expr7 : Expr6 GreaterEqual Expr6 .  (76)
+
+	.  reduce 76
+
+
+state 200
+	Expr7 : Expr6 Greater Expr6 .  (77)
+
+	.  reduce 77
+
+
+state 201
+	Expr5 : Expr4 Plus Expr4 .  (83)
+
+	.  reduce 83
+
+
+state 202
+	Expr5 : Expr4 Negat Expr4 .  (84)
+
+	.  reduce 84
+
+
+state 203
+	Expr5 : Expr5 Plus Expr4 .  (81)
+
+	.  reduce 81
+
+
+state 204
+	Expr5 : Expr5 Negat Expr4 .  (82)
+
+	.  reduce 82
+
+
+state 205
+	Expr3 : Expr3 Mult Expr2 .  (87)
+
+	.  reduce 87
+
+
+state 206
+	Expr3 : Expr3 Div Expr2 .  (88)
+
+	.  reduce 88
+
+
+state 207
+	Expr3 : Expr3 Mod Expr2 .  (89)
+
+	.  reduce 89
+
+
+state 208
+	Expr3 : Expr2 Mult Expr2 .  (90)
+
+	.  reduce 90
+
+
+state 209
+	Expr3 : Expr2 Div Expr2 .  (91)
+
+	.  reduce 91
+
+
+state 210
+	Expr3 : Expr2 Mod Expr2 .  (92)
+
+	.  reduce 92
+
+
+state 211
+	FieldA : Expr1 T_Dot Ident .  (111)
+
+	.  reduce 111
+
+
+state 212
+	LValue : Expr1 T_LBracket Expr14 . T_RBracket  (108)
+
+	T_RBracket  shift 222
+	.  error
+
+
+state 213
+	ForHeader : T_For T_LParen T_Semicolon Expr15 . Expr14 T_RParen  (42)
+	ForHeader : T_For T_LParen T_Semicolon Expr15 . T_RParen  (44)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	T_RParen  shift 223
+	.  error
+
+	Ident  goto 66
+	Expr14  goto 224
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 214
+	ForHeader : T_For T_LParen Expr15 Expr15 . Expr14 T_RParen  (41)
+	ForHeader : T_For T_LParen Expr15 Expr15 . T_RParen  (43)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	T_RParen  shift 225
+	.  error
+
+	Ident  goto 66
+	Expr14  goto 226
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 215
+	Expr16 : T_LParen Expr14 T_RParen .  (56)
+
+	.  reduce 56
+
+
+state 216
+	Expr : T_New T_LParen Ident T_RParen .  (102)
+
+	.  reduce 102
+
+
+state 217
+	Expr : T_NewArray T_LParen Ident T_Comma . Type T_RParen  (103)
+
+	T_Int  shift 2
+	T_Double  shift 3
+	T_Bool  shift 4
+	T_String  shift 5
+	T_TypeIdentifier  shift 6
+	.  error
+
+	Type  goto 227
+	Int  goto 14
+	Double  goto 15
+	Bool  goto 16
+	String  goto 17
+	TIdent  goto 18
+
+
+state 218
+	Actuals1 : Actuals1 T_Comma . Expr14  (55)
+
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
+	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
+	.  error
+
+	Ident  goto 66
+	Expr14  goto 228
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr7  goto 92
+	Expr6  goto 93
+	Expr4  goto 94
+	Expr5  goto 95
+	Negat  goto 96
+	Expr3  goto 97
+	Expr2  goto 98
+	Expr1  goto 99
+	Excla  goto 100
+	Call  goto 101
+	Expr  goto 102
+	Constant  goto 103
+	This  goto 104
+	FieldA  goto 105
+	IntC  goto 106
+	DoubleC  goto 107
+	BoolC  goto 108
+	StringC  goto 109
+	Null  goto 110
+
+
+state 219
+	ActualsCall : T_LParen Actuals T_RParen .  (51)
+
+	.  reduce 51
+
+
+state 220
+	ActualsPrint : T_LParen Actuals1 T_RParen .  (50)
+
+	.  reduce 50
+
+
+state 221
+	MatchedIfStmt : IfHeader Stmt1 T_Else Stmt .  (48)
+
+	.  reduce 48
+
+
+state 222
+	LValue : Expr1 T_LBracket Expr14 T_RBracket .  (108)
+
+	.  reduce 108
+
+
+state 223
+	ForHeader : T_For T_LParen T_Semicolon Expr15 T_RParen .  (44)
+
+	.  reduce 44
+
+
+state 224
+	ForHeader : T_For T_LParen T_Semicolon Expr15 Expr14 . T_RParen  (42)
+
+	T_RParen  shift 229
+	.  error
+
+
+state 225
+	ForHeader : T_For T_LParen Expr15 Expr15 T_RParen .  (43)
+
+	.  reduce 43
+
+
+state 226
+	ForHeader : T_For T_LParen Expr15 Expr15 Expr14 . T_RParen  (41)
+
+	T_RParen  shift 230
+	.  error
+
+
+state 227
+	Type : Type . T_LBracket T_RBracket  (8)
+	Expr : T_NewArray T_LParen Ident T_Comma Type . T_RParen  (103)
+
+	T_LBracket  shift 23
+	T_RParen  shift 231
+	.  error
+
+
+state 228
+	Actuals1 : Actuals1 T_Comma Expr14 .  (55)
+
+	.  reduce 55
+
+
+state 229
+	ForHeader : T_For T_LParen T_Semicolon Expr15 Expr14 T_RParen .  (42)
+
+	.  reduce 42
+
+
+state 230
+	ForHeader : T_For T_LParen Expr15 Expr15 Expr14 T_RParen .  (41)
+
+	.  reduce 41
+
+
+state 231
+	Expr : T_NewArray T_LParen Ident T_Comma Type T_RParen .  (103)
+
+	.  reduce 103
+
+
+State 131 contains 1 shift/reduce conflict.
+
+
+54 terminals, 81 nonterminals
+148 grammar rules, 232 states
