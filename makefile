@@ -18,7 +18,7 @@ lex.yy.o: lex.yy.c
 #	yacc -d -v decaf.y
 
 y.tab.c: decaf.y parsetree.h
-	yacc -t -d -v decaf.y # -t supports runtime debug info
+	yacc -d -v decaf.y # -t supports runtime debug info
 #	yacc -d -v decaf.y
 
 lex.yy.c: decaf.lex # y.tab.h
