@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  yydebug = 1;
+  yydebug = 0;
 #ifdef Tokens
   int tok;
   while ((tok=yylex()) != -1) {
@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
   top = 0;
   yyparse();
   traverseTree(top, 0, 1);
-  cout << top->toString() << endl;
+  //cout << top->toString() << endl;
   return 0;
 #endif
 }
