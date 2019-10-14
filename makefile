@@ -24,5 +24,5 @@ y.tab.c: decaf.y parsetree.h
 lex.yy.c: decaf.lex # y.tab.h
 	flex decaf.lex
 
-clean:
-	rm -rf *~ lex.yy.* *.o y.tab.* decafp a.out y.output
+#clean:
+	#rm -rf *~ lex.yy.* *.o y.tab.* decafp a.out y.output
