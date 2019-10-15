@@ -94,6 +94,7 @@ Decl: Decl1 { $$ = new ParseTree("program", $1); }
 Decl1: VarDec
 |FuncDec
 |ClassDec
+|InterfaceDec
 			
 /* ----------------------------------------------------------------------- */
 
@@ -141,7 +142,7 @@ Implem1: T_Implements Ident { $$ = new ParseTree("implements", $2); }
 | Implem1 T_Comma Ident { $1->addChild($3); }
 
 Field1: { $$ = new ParseTree("fields"); }
-| Field1 Field {$1->addChild($2); }
+| Field1 Field { $1->addChild($2); }
 
 Field: VarDec
 | FuncDec
@@ -153,11 +154,11 @@ Idents: Ident
 
 InterfaceDec: Interface T_RBrace 
 
-Interface: T_Interface Ident T_LBrace { $$ = new ParseTree(“interface”, $2,); }
-| Interface Prototype T_Semicolon {$1->addChild($2); }
+Interface: T_Interface Ident T_LBrace { $$ = new ParseTree("interface", $2); }
+| Interface Prototype T_Semicolon { $1->addChild($2); }
 
-Prototype: Type Ident T_LParen Formals T_RParen { $$ = new ParseTree(“prototype”, $1, $2, $4); }
-| Void Ident T_LParen Formals T_RParen { $$ = new ParseTree(“prototype”, $1, $2, $4); }
+Prototype: Type Ident T_LParen Formals T_RParen { $$ = new ParseTree("prototype", $1, $2, $4); }
+| Void Ident T_LParen Formals T_RParen { $$ = new ParseTree("prototype", $1, $2, $4); }
 
 /* ----------------------------------------------------------------------- */
 
