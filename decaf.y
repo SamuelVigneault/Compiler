@@ -148,6 +148,17 @@ Field: VarDec
 
 Idents: Ident
 |TIdent
+
+/* ----------------------------------------------------------------------- */
+
+InterfaceDec: Interface T_RBrace 
+
+Interface: T_Interface Ident T_LBrace { $$ = new ParseTree(“interface”, $2,); }
+| Interface Prototype T_Semicolon {$1->addChild($2); }
+
+Prototype: Type Ident T_LParen Formals T_RParen { $$ = new ParseTree(“prototype”, $1, $2, $4); }
+| Void Ident T_LParen Formals T_RParen { $$ = new ParseTree(“prototype”, $1, $2, $4); }
+
 /* ----------------------------------------------------------------------- */
 
 Stmt: Open
