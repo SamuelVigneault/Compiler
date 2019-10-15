@@ -1,8 +1,11 @@
+class hey extends poop implements lol, hey, doom { int a; lol v;}
+
+
+/*
+
 void hello() {
  A = NewArray(hey = oo, int);
-}
-/*
-;
+
 
 for(;lol;) lol;
 
