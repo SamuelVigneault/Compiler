@@ -174,86 +174,91 @@
  120       | This
  121       | T_LParen Expr14 T_RParen
  122       | T_New T_LParen Ident T_RParen
- 123       | T_NewArray T_LParen Expr14 T_Comma Type T_RParen
+ 123       | T_NewArray T_LParen Expr14 T_Comma NewArrayType T_RParen
  124       | T_ReadLine T_LParen T_RParen
  125       | T_ReadInteger T_LParen T_RParen
 
- 126  LValue : Ident
- 127         | FieldA
- 128         | Expr1 T_LBracket Expr14 T_RBracket
+ 126  NewArrayType : Type
+ 127               | NewArrayHack
 
- 129  Call : Ident ActualsCall
- 130       | FieldA ActualsCall
+ 128  NewArrayHack : Ident
 
- 131  FieldA : Expr1 T_Dot Ident
+ 129  LValue : Ident
+ 130         | FieldA
+ 131         | Expr1 T_LBracket Expr14 T_RBracket
 
- 132  Constant : IntC
- 133           | DoubleC
- 134           | BoolC
- 135           | StringC
- 136           | Null
+ 132  Call : Ident ActualsCall
+ 133       | FieldA ActualsCall
 
- 137  Print : T_Print
+ 134  FieldA : Expr1 T_Dot Ident
 
- 138  Break : T_Break
+ 135  Constant : IntC
+ 136           | DoubleC
+ 137           | BoolC
+ 138           | StringC
+ 139           | Null
 
- 139  Return : T_Return
+ 140  Print : T_Print
 
- 140  Less : T_Less
+ 141  Break : T_Break
 
- 141  LessEqual : T_LessEqual
+ 142  Return : T_Return
 
- 142  Greater : T_Greater
+ 143  Less : T_Less
 
- 143  GreaterEqual : T_GreaterEqual
+ 144  LessEqual : T_LessEqual
 
- 144  Assign : T_Assign
+ 145  Greater : T_Greater
 
- 145  Equal : T_Equal
+ 146  GreaterEqual : T_GreaterEqual
 
- 146  NotEqual : T_NotEqual
+ 147  Assign : T_Assign
 
- 147  And : T_And
+ 148  Equal : T_Equal
 
- 148  Or : T_Or
+ 149  NotEqual : T_NotEqual
 
- 149  Plus : T_Plus
+ 150  And : T_And
 
- 150  Div : T_Div
+ 151  Or : T_Or
 
- 151  Mult : T_Times
+ 152  Plus : T_Plus
 
- 152  Mod : T_Mod
+ 153  Div : T_Div
 
- 153  Excla : T_Not
+ 154  Mult : T_Times
 
- 154  Negat : T_Minus
+ 155  Mod : T_Mod
 
- 155  Null : T_Null
+ 156  Excla : T_Not
 
- 156  This : T_This
+ 157  Negat : T_Minus
 
- 157  Void : T_Void
+ 158  Null : T_Null
 
- 158  Int : T_Int
+ 159  This : T_This
 
- 159  Double : T_Double
+ 160  Void : T_Void
 
- 160  Bool : T_Bool
+ 161  Int : T_Int
 
- 161  String : T_String
+ 162  Double : T_Double
 
- 162  IntC : T_IntConstant
+ 163  Bool : T_Bool
 
- 163  DoubleC : T_DoubleConstant
+ 164  String : T_String
 
- 164  BoolC : T_BoolConstant
+ 165  IntC : T_IntConstant
 
- 165  StringC : T_StringConstant
+ 166  DoubleC : T_DoubleConstant
 
- 166  Ident : T_Identifier
+ 167  BoolC : T_BoolConstant
 
- 167  TIdent : T_TypeIdentifier
+ 168  StringC : T_StringConstant
+
+ 169  Ident : T_Identifier
+
+ 170  TIdent : T_TypeIdentifier
 
 state 0
 	$accept : . Program $end  (0)
@@ -284,33 +289,33 @@ state 0
 
 
 state 1
-	Void : T_Void .  (157)
-
-	.  reduce 157
-
-
-state 2
-	Int : T_Int .  (158)
-
-	.  reduce 158
-
-
-state 3
-	Double : T_Double .  (159)
-
-	.  reduce 159
-
-
-state 4
-	Bool : T_Bool .  (160)
+	Void : T_Void .  (160)
 
 	.  reduce 160
 
 
-state 5
-	String : T_String .  (161)
+state 2
+	Int : T_Int .  (161)
 
 	.  reduce 161
+
+
+state 3
+	Double : T_Double .  (162)
+
+	.  reduce 162
+
+
+state 4
+	Bool : T_Bool .  (163)
+
+	.  reduce 163
+
+
+state 5
+	String : T_String .  (164)
+
+	.  reduce 164
 
 
 state 6
@@ -326,9 +331,9 @@ state 6
 
 
 state 7
-	TIdent : T_TypeIdentifier .  (167)
+	TIdent : T_TypeIdentifier .  (170)
 
-	.  reduce 167
+	.  reduce 170
 
 
 state 8
@@ -447,9 +452,9 @@ state 21
 
 
 state 22
-	Ident : T_Identifier .  (166)
+	Ident : T_Identifier .  (169)
 
-	.  reduce 166
+	.  reduce 169
 
 
 state 23
@@ -930,15 +935,15 @@ state 64
 
 
 state 65
-	Null : T_Null .  (155)
+	Null : T_Null .  (158)
 
-	.  reduce 155
+	.  reduce 158
 
 
 state 66
-	This : T_This .  (156)
+	This : T_This .  (159)
 
-	.  reduce 156
+	.  reduce 159
 
 
 state 67
@@ -970,15 +975,15 @@ state 69
 
 
 state 70
-	Return : T_Return .  (139)
+	Return : T_Return .  (142)
 
-	.  reduce 139
+	.  reduce 142
 
 
 state 71
-	Break : T_Break .  (138)
+	Break : T_Break .  (141)
 
-	.  reduce 138
+	.  reduce 141
 
 
 state 72
@@ -989,16 +994,16 @@ state 72
 
 
 state 73
-	Expr : T_NewArray . T_LParen Expr14 T_Comma Type T_RParen  (123)
+	Expr : T_NewArray . T_LParen Expr14 T_Comma NewArrayType T_RParen  (123)
 
 	T_LParen  shift 137
 	.  error
 
 
 state 74
-	Print : T_Print .  (137)
+	Print : T_Print .  (140)
 
-	.  reduce 137
+	.  reduce 140
 
 
 state 75
@@ -1016,39 +1021,39 @@ state 76
 
 
 state 77
-	IntC : T_IntConstant .  (162)
-
-	.  reduce 162
-
-
-state 78
-	BoolC : T_BoolConstant .  (164)
-
-	.  reduce 164
-
-
-state 79
-	DoubleC : T_DoubleConstant .  (163)
-
-	.  reduce 163
-
-
-state 80
-	StringC : T_StringConstant .  (165)
+	IntC : T_IntConstant .  (165)
 
 	.  reduce 165
 
 
-state 81
-	Negat : T_Minus .  (154)
+state 78
+	BoolC : T_BoolConstant .  (167)
 
-	.  reduce 154
+	.  reduce 167
+
+
+state 79
+	DoubleC : T_DoubleConstant .  (166)
+
+	.  reduce 166
+
+
+state 80
+	StringC : T_StringConstant .  (168)
+
+	.  reduce 168
+
+
+state 81
+	Negat : T_Minus .  (157)
+
+	.  reduce 157
 
 
 state 82
-	Excla : T_Not .  (153)
+	Excla : T_Not .  (156)
 
-	.  reduce 153
+	.  reduce 156
 
 
 state 83
@@ -1114,30 +1119,30 @@ state 85
 
 
 state 86
-	LValue : Ident .  (126)
-	Call : Ident . ActualsCall  (129)
+	LValue : Ident .  (129)
+	Call : Ident . ActualsCall  (132)
 
 	T_LParen  shift 141
-	T_Plus  reduce 126
-	T_Minus  reduce 126
-	T_Times  reduce 126
-	T_Div  reduce 126
-	T_Mod  reduce 126
-	T_Less  reduce 126
-	T_LessEqual  reduce 126
-	T_Greater  reduce 126
-	T_GreaterEqual  reduce 126
-	T_Assign  reduce 126
-	T_Equal  reduce 126
-	T_NotEqual  reduce 126
-	T_And  reduce 126
-	T_Or  reduce 126
-	T_Semicolon  reduce 126
-	T_Comma  reduce 126
-	T_Dot  reduce 126
-	T_LBracket  reduce 126
-	T_RBracket  reduce 126
-	T_RParen  reduce 126
+	T_Plus  reduce 129
+	T_Minus  reduce 129
+	T_Times  reduce 129
+	T_Div  reduce 129
+	T_Mod  reduce 129
+	T_Less  reduce 129
+	T_LessEqual  reduce 129
+	T_Greater  reduce 129
+	T_GreaterEqual  reduce 129
+	T_Assign  reduce 129
+	T_Equal  reduce 129
+	T_NotEqual  reduce 129
+	T_And  reduce 129
+	T_Or  reduce 129
+	T_Semicolon  reduce 129
+	T_Comma  reduce 129
+	T_Dot  reduce 129
+	T_LBracket  reduce 129
+	T_RBracket  reduce 129
+	T_RParen  reduce 129
 
 	ActualsCall  goto 142
 
@@ -1869,8 +1874,8 @@ state 120
 
 state 121
 	Expr2 : Expr1 .  (115)
-	LValue : Expr1 . T_LBracket Expr14 T_RBracket  (128)
-	FieldA : Expr1 . T_Dot Ident  (131)
+	LValue : Expr1 . T_LBracket Expr14 T_RBracket  (131)
+	FieldA : Expr1 . T_Dot Ident  (134)
 
 	T_Dot  shift 196
 	T_LBracket  shift 197
@@ -1918,62 +1923,62 @@ state 125
 
 
 state 126
-	LValue : FieldA .  (127)
-	Call : FieldA . ActualsCall  (130)
+	LValue : FieldA .  (130)
+	Call : FieldA . ActualsCall  (133)
 
 	T_LParen  shift 141
-	T_Plus  reduce 127
-	T_Minus  reduce 127
-	T_Times  reduce 127
-	T_Div  reduce 127
-	T_Mod  reduce 127
-	T_Less  reduce 127
-	T_LessEqual  reduce 127
-	T_Greater  reduce 127
-	T_GreaterEqual  reduce 127
-	T_Assign  reduce 127
-	T_Equal  reduce 127
-	T_NotEqual  reduce 127
-	T_And  reduce 127
-	T_Or  reduce 127
-	T_Semicolon  reduce 127
-	T_Comma  reduce 127
-	T_Dot  reduce 127
-	T_LBracket  reduce 127
-	T_RBracket  reduce 127
-	T_RParen  reduce 127
+	T_Plus  reduce 130
+	T_Minus  reduce 130
+	T_Times  reduce 130
+	T_Div  reduce 130
+	T_Mod  reduce 130
+	T_Less  reduce 130
+	T_LessEqual  reduce 130
+	T_Greater  reduce 130
+	T_GreaterEqual  reduce 130
+	T_Assign  reduce 130
+	T_Equal  reduce 130
+	T_NotEqual  reduce 130
+	T_And  reduce 130
+	T_Or  reduce 130
+	T_Semicolon  reduce 130
+	T_Comma  reduce 130
+	T_Dot  reduce 130
+	T_LBracket  reduce 130
+	T_RBracket  reduce 130
+	T_RParen  reduce 130
 
 	ActualsCall  goto 198
 
 
 state 127
-	Constant : IntC .  (132)
-
-	.  reduce 132
-
-
-state 128
-	Constant : DoubleC .  (133)
-
-	.  reduce 133
-
-
-state 129
-	Constant : BoolC .  (134)
-
-	.  reduce 134
-
-
-state 130
-	Constant : StringC .  (135)
+	Constant : IntC .  (135)
 
 	.  reduce 135
 
 
-state 131
-	Constant : Null .  (136)
+state 128
+	Constant : DoubleC .  (136)
 
 	.  reduce 136
+
+
+state 129
+	Constant : BoolC .  (137)
+
+	.  reduce 137
+
+
+state 130
+	Constant : StringC .  (138)
+
+	.  reduce 138
+
+
+state 131
+	Constant : Null .  (139)
+
+	.  reduce 139
 
 
 state 132
@@ -2103,7 +2108,7 @@ state 136
 
 
 state 137
-	Expr : T_NewArray T_LParen . Expr14 T_Comma Type T_RParen  (123)
+	Expr : T_NewArray T_LParen . Expr14 T_Comma NewArrayType T_RParen  (123)
 
 	T_Null  shift 65
 	T_This  shift 66
@@ -2227,9 +2232,9 @@ state 141
 
 
 state 142
-	Call : Ident ActualsCall .  (129)
+	Call : Ident ActualsCall .  (132)
 
-	.  reduce 129
+	.  reduce 132
 
 
 state 143
@@ -2365,9 +2370,9 @@ state 152
 
 
 state 153
-	Assign : T_Assign .  (144)
+	Assign : T_Assign .  (147)
 
-	.  reduce 144
+	.  reduce 147
 
 
 state 154
@@ -2421,9 +2426,9 @@ state 154
 
 
 state 155
-	Or : T_Or .  (148)
+	Or : T_Or .  (151)
 
-	.  reduce 148
+	.  reduce 151
 
 
 state 156
@@ -2521,9 +2526,9 @@ state 157
 
 
 state 158
-	And : T_And .  (147)
+	And : T_And .  (150)
 
-	.  reduce 147
+	.  reduce 150
 
 
 state 159
@@ -2617,15 +2622,15 @@ state 160
 
 
 state 161
-	Equal : T_Equal .  (145)
+	Equal : T_Equal .  (148)
 
-	.  reduce 145
+	.  reduce 148
 
 
 state 162
-	NotEqual : T_NotEqual .  (146)
+	NotEqual : T_NotEqual .  (149)
 
-	.  reduce 146
+	.  reduce 149
 
 
 state 163
@@ -2801,27 +2806,27 @@ state 166
 
 
 state 167
-	Less : T_Less .  (140)
+	Less : T_Less .  (143)
 
-	.  reduce 140
+	.  reduce 143
 
 
 state 168
-	LessEqual : T_LessEqual .  (141)
+	LessEqual : T_LessEqual .  (144)
 
-	.  reduce 141
+	.  reduce 144
 
 
 state 169
-	Greater : T_Greater .  (142)
+	Greater : T_Greater .  (145)
 
-	.  reduce 142
+	.  reduce 145
 
 
 state 170
-	GreaterEqual : T_GreaterEqual .  (143)
+	GreaterEqual : T_GreaterEqual .  (146)
 
-	.  reduce 143
+	.  reduce 146
 
 
 state 171
@@ -3153,9 +3158,9 @@ state 178
 
 
 state 179
-	Plus : T_Plus .  (149)
+	Plus : T_Plus .  (152)
 
-	.  reduce 149
+	.  reduce 152
 
 
 state 180
@@ -3327,21 +3332,21 @@ state 185
 
 
 state 186
-	Mult : T_Times .  (151)
+	Mult : T_Times .  (154)
 
-	.  reduce 151
+	.  reduce 154
 
 
 state 187
-	Div : T_Div .  (150)
+	Div : T_Div .  (153)
 
-	.  reduce 150
+	.  reduce 153
 
 
 state 188
-	Mod : T_Mod .  (152)
+	Mod : T_Mod .  (155)
 
-	.  reduce 152
+	.  reduce 155
 
 
 state 189
@@ -3573,7 +3578,7 @@ state 195
 
 
 state 196
-	FieldA : Expr1 T_Dot . Ident  (131)
+	FieldA : Expr1 T_Dot . Ident  (134)
 
 	T_Identifier  shift 22
 	.  error
@@ -3582,7 +3587,7 @@ state 196
 
 
 state 197
-	LValue : Expr1 T_LBracket . Expr14 T_RBracket  (128)
+	LValue : Expr1 T_LBracket . Expr14 T_RBracket  (131)
 
 	T_Null  shift 65
 	T_This  shift 66
@@ -3632,9 +3637,9 @@ state 197
 
 
 state 198
-	Call : FieldA ActualsCall .  (130)
+	Call : FieldA ActualsCall .  (133)
 
-	.  reduce 130
+	.  reduce 133
 
 
 state 199
@@ -3756,7 +3761,7 @@ state 202
 
 
 state 203
-	Expr : T_NewArray T_LParen Expr14 . T_Comma Type T_RParen  (123)
+	Expr : T_NewArray T_LParen Expr14 . T_Comma NewArrayType T_RParen  (123)
 
 	T_Comma  shift 246
 	.  error
@@ -4054,13 +4059,13 @@ state 239
 
 
 state 240
-	FieldA : Expr1 T_Dot Ident .  (131)
+	FieldA : Expr1 T_Dot Ident .  (134)
 
-	.  reduce 131
+	.  reduce 134
 
 
 state 241
-	LValue : Expr1 T_LBracket Expr14 . T_RBracket  (128)
+	LValue : Expr1 T_LBracket Expr14 . T_RBracket  (131)
 
 	T_RBracket  shift 252
 	.  error
@@ -4183,21 +4188,25 @@ state 245
 
 
 state 246
-	Expr : T_NewArray T_LParen Expr14 T_Comma . Type T_RParen  (123)
+	Expr : T_NewArray T_LParen Expr14 T_Comma . NewArrayType T_RParen  (123)
 
 	T_Int  shift 2
 	T_Double  shift 3
 	T_Bool  shift 4
 	T_String  shift 5
+	T_Identifier  shift 22
 	T_TypeIdentifier  shift 7
 	.  error
 
 	Type  goto 257
+	Ident  goto 258
 	Int  goto 16
 	Double  goto 17
 	Bool  goto 18
 	String  goto 19
 	TIdent  goto 20
+	NewArrayType  goto 259
+	NewArrayHack  goto 260
 
 
 state 247
@@ -4220,7 +4229,7 @@ state 247
 	.  error
 
 	Ident  goto 86
-	Expr14  goto 258
+	Expr14  goto 261
 	LValue  goto 105
 	Expr13  goto 106
 	Expr11  goto 107
@@ -4275,9 +4284,9 @@ state 251
 
 
 state 252
-	LValue : Expr1 T_LBracket Expr14 T_RBracket .  (128)
+	LValue : Expr1 T_LBracket Expr14 T_RBracket .  (131)
 
-	.  reduce 128
+	.  reduce 131
 
 
 state 253
@@ -4289,7 +4298,7 @@ state 253
 state 254
 	ForHeader : T_For T_LParen T_Semicolon Expr15 Expr14 . T_RParen  (56)
 
-	T_RParen  shift 259
+	T_RParen  shift 262
 	.  error
 
 
@@ -4302,39 +4311,57 @@ state 255
 state 256
 	ForHeader : T_For T_LParen Expr15 Expr15 Expr14 . T_RParen  (55)
 
-	T_RParen  shift 260
+	T_RParen  shift 263
 	.  error
 
 
 state 257
 	Type : Type . T_LBracket T_RBracket  (9)
-	Expr : T_NewArray T_LParen Expr14 T_Comma Type . T_RParen  (123)
+	NewArrayType : Type .  (126)
 
 	T_LBracket  shift 28
-	T_RParen  shift 261
-	.  error
+	T_RParen  reduce 126
 
 
 state 258
+	NewArrayHack : Ident .  (128)
+
+	.  reduce 128
+
+
+state 259
+	Expr : T_NewArray T_LParen Expr14 T_Comma NewArrayType . T_RParen  (123)
+
+	T_RParen  shift 264
+	.  error
+
+
+state 260
+	NewArrayType : NewArrayHack .  (127)
+
+	.  reduce 127
+
+
+state 261
 	Actuals1 : Actuals1 T_Comma Expr14 .  (70)
 
 	.  reduce 70
 
 
-state 259
+state 262
 	ForHeader : T_For T_LParen T_Semicolon Expr15 Expr14 T_RParen .  (56)
 
 	.  reduce 56
 
 
-state 260
+state 263
 	ForHeader : T_For T_LParen Expr15 Expr15 Expr14 T_RParen .  (55)
 
 	.  reduce 55
 
 
-state 261
-	Expr : T_NewArray T_LParen Expr14 T_Comma Type T_RParen .  (123)
+state 264
+	Expr : T_NewArray T_LParen Expr14 T_Comma NewArrayType T_RParen .  (123)
 
 	.  reduce 123
 
@@ -4342,5 +4369,5 @@ state 261
 State 152 contains 1 shift/reduce conflict.
 
 
-54 terminals, 89 nonterminals
-168 grammar rules, 262 states
+54 terminals, 91 nonterminals
+171 grammar rules, 265 states
