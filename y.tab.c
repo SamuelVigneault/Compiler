@@ -391,7 +391,7 @@ static const short yycheck[] = {                         44,
 };
 #define YYFINAL 7
 #ifndef YYDEBUG
-#define YYDEBUG 1
+#define YYDEBUG 0
 #endif
 #define YYMAXTOKEN 52
 #if YYDEBUG
@@ -909,7 +909,7 @@ case 37:
 break;
 case 38:
 #line 147 "decaf.y"
-	{ yyval = new ParseTree("print", yystack.l_mark[-2], yystack.l_mark[0]); }
+	{ yyval = new ParseTree("print", yystack.l_mark[-2], yystack.l_mark[-1]); }
 break;
 case 39:
 #line 149 "decaf.y"
