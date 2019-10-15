@@ -1,5 +1,7 @@
 void hello() {
-
+ A = NewArray(hey = oo, int);
+}
+/*
 ;
 
 for(;lol;) lol;
@@ -58,4 +60,4 @@ int main()
         scanf("%d %d %d", n1, n2, n3);
 
         print_it(n1, n2, n3, av(n1, n2, n3));
-}
+}*/

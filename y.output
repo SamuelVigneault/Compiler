@@ -153,7 +153,7 @@
  106       | This
  107       | T_LParen Expr14 T_RParen
  108       | T_New T_LParen Ident T_RParen
- 109       | T_NewArray T_LParen Ident T_Comma Type T_RParen
+ 109       | T_NewArray T_LParen Expr14 T_Comma Type T_RParen
  110       | T_ReadLine T_LParen T_RParen
  111       | T_ReadInteger T_LParen T_RParen
 
@@ -790,7 +790,7 @@ state 52
 
 
 state 53
-	Expr : T_NewArray . T_LParen Ident T_Comma Type T_RParen  (109)
+	Expr : T_NewArray . T_LParen Expr14 T_Comma Type T_RParen  (109)
 
 	T_LParen  shift 117
 	.  error
@@ -1904,12 +1904,53 @@ state 116
 
 
 state 117
-	Expr : T_NewArray T_LParen . Ident T_Comma Type T_RParen  (109)
+	Expr : T_NewArray T_LParen . Expr14 T_Comma Type T_RParen  (109)
 
+	T_Null  shift 45
+	T_This  shift 46
+	T_New  shift 52
+	T_NewArray  shift 53
+	T_ReadInteger  shift 55
+	T_ReadLine  shift 56
 	T_Identifier  shift 22
+	T_IntConstant  shift 57
+	T_BoolConstant  shift 58
+	T_DoubleConstant  shift 59
+	T_StringConstant  shift 60
+	T_Minus  shift 61
+	T_Not  shift 62
+	T_LParen  shift 64
 	.  error
 
-	Ident  goto 183
+	Ident  goto 66
+	Expr14  goto 183
+	LValue  goto 85
+	Expr13  goto 86
+	Expr11  goto 87
+	Expr12  goto 88
+	Expr10  goto 89
+	Expr9  goto 90
+	Expr8  goto 91
+	Expr71  goto 92
+	Expr7  goto 93
+	Expr6  goto 94
+	Expr4  goto 95
+	Expr5  goto 96
+	Negat  goto 97
+	Expr3  goto 98
+	Expr2  goto 99
+	Excla  goto 100
+	Expr1  goto 101
+	Call  goto 102
+	Expr  goto 103
+	Constant  goto 104
+	This  goto 105
+	FieldA  goto 106
+	IntC  goto 107
+	DoubleC  goto 108
+	BoolC  goto 109
+	StringC  goto 110
+	Null  goto 111
 
 
 state 118
@@ -3516,7 +3557,7 @@ state 182
 
 
 state 183
-	Expr : T_NewArray T_LParen Ident . T_Comma Type T_RParen  (109)
+	Expr : T_NewArray T_LParen Expr14 . T_Comma Type T_RParen  (109)
 
 	T_Comma  shift 226
 	.  error
@@ -3943,7 +3984,7 @@ state 225
 
 
 state 226
-	Expr : T_NewArray T_LParen Ident T_Comma . Type T_RParen  (109)
+	Expr : T_NewArray T_LParen Expr14 T_Comma . Type T_RParen  (109)
 
 	T_Int  shift 2
 	T_Double  shift 3
@@ -4068,7 +4109,7 @@ state 236
 
 state 237
 	Type : Type . T_LBracket T_RBracket  (8)
-	Expr : T_NewArray T_LParen Ident T_Comma Type . T_RParen  (109)
+	Expr : T_NewArray T_LParen Expr14 T_Comma Type . T_RParen  (109)
 
 	T_LBracket  shift 23
 	T_RParen  shift 241
@@ -4094,7 +4135,7 @@ state 240
 
 
 state 241
-	Expr : T_NewArray T_LParen Ident T_Comma Type T_RParen .  (109)
+	Expr : T_NewArray T_LParen Expr14 T_Comma Type T_RParen .  (109)
 
 	.  reduce 109
 
