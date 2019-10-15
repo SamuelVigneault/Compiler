@@ -128,6 +128,24 @@ StmtSt: { $$ = new ParseTree("stmts"); }
 
 /* ----------------------------------------------------------------------- */
 
+ClassDecl: T_Class Ident T_LBrace Field1 T_RBrace { $$ = new ParseTree(“class”, $2, nullptr, nullptr, $4); }
+| T_Class Ident Extend T_LBrace Field1 T_RBrace { $$ = new ParseTree(“class”, $2, $3, nullptr, $5); }
+| T_Class Ident Implem T_LBrace Field1 T_RBrace { $$ = new ParseTree(“class”, $2, nullptr, $3, $5); }
+| T_Class Ident Extend Implem T_LBrace Field1 T_RBrace { $$ = new ParseTree(“class”, $2, $3, $4, $6); }
+
+Extend: T_Extends Ident { $$ = new ParseTree(“extends”, $2); }
+
+Implem: T_Implements Ident { $$ = new ParseTree(“implements”, $2); }
+| Implem T_Comma Ident {$1->addChild($3); }
+
+Field1: { $$ = new ParseTree(“fields”); }
+| Field1 Field {$1->addChild($2); }
+
+Field: VarDec
+| FuncDec
+
+/* ----------------------------------------------------------------------- */
+
 Stmt: Open
 | Matched
 
