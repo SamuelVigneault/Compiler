@@ -129,10 +129,10 @@ StmtSt: { $$ = new ParseTree("stmts"); }
 
 /* ----------------------------------------------------------------------- */
 
-ClassDec: T_Class Ident Extend Implem T_LBrace Field1 T_RBrace { $$ = new ParseTree("class", $2, $3, $4, $6); }
+ClassDec: T_Class Idents Extend Implem T_LBrace Field1 T_RBrace { $$ = new ParseTree("class", $2, $3, $4, $6); }
 
 Extend: { $$ = nullptr; }
-| T_Extends Ident { $$ = new ParseTree("extends", $2); }
+| T_Extends Idents { $$ = new ParseTree("extends", $2); }
 
 Implem: { $$ = nullptr; }
 | Implem1
@@ -146,6 +146,8 @@ Field1: { $$ = new ParseTree("fields"); }
 Field: VarDec
 | FuncDec
 
+Idents: Ident
+|TIdent
 /* ----------------------------------------------------------------------- */
 
 Stmt: Open

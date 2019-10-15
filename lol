@@ -1,4 +1,4 @@
-class hey extends poop implements lol, hey, doom { int a; lol v;}
+class hey extends poop implements lol, hey, doom { int a; lol v; }
 
 
 /*
