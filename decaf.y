@@ -144,7 +144,7 @@ Matched: StmtBlock
 ReturnStmt: Return T_Semicolon { $$ = new ParseTree("return", $1); }
 | Return Expr15 { $$ = new ParseTree("return", $1, $2); }
 
-PrintStmt: Print ActualsPrint T_Semicolon { $$ = new ParseTree("print", $1, $3); }
+PrintStmt: Print ActualsPrint T_Semicolon { $$ = new ParseTree("print", $1, $2); }
 
 BreakStmt: Break T_Semicolon { $$ = new ParseTree("break", $1); }
 
