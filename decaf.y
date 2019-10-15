@@ -272,9 +272,14 @@ Expr: Constant
 | This 			
 | T_LParen Expr14 T_RParen { $$ = $2; }
 | T_New T_LParen Ident T_RParen { $$ = new ParseTree("new", $3); }
-| T_NewArray T_LParen Expr14 T_Comma Type T_RParen { $$ = new ParseTree("newarray", $3, $5); }
+| T_NewArray T_LParen Expr14 T_Comma NewArrayType T_RParen { $$ = new ParseTree("newarray", $3, $5); }
 | T_ReadLine T_LParen T_RParen{ $$ = new ParseTree("readline"); }
 | T_ReadInteger T_LParen T_RParen{ $$ = new ParseTree("readinteger"); }
+
+NewArrayType: Type 
+| NewArrayHack
+
+NewArrayHack: Ident { $$  = new ParseTree("usertype", $1); }
 
 LValue: Ident
 | FieldA
