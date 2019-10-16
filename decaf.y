@@ -109,10 +109,11 @@ Type: Type T_LBracket T_RBracket { $$ = new ParseTree("arraytype", $1); }
 | String { $$ = new ParseTree("primtype", $1); }
 | TIdent { $$ = new ParseTree("usertype", $1); }
      
+TypeV: Type
+| Void
 /* ----------------------------------------------------------------------- */
 
-FuncDec: Type Ident T_LParen Formals T_RParen StmtBlock { $$ = new ParseTree("functiondecl", $1, $2, $4, $6); }
-| Void Ident T_LParen Formals T_RParen StmtBlock { $$ = new ParseTree("functiondecl", $1, $2, $4, $6); }
+FuncDec: TypeV Ident T_LParen Formals T_RParen StmtBlock { $$ = new ParseTree("functiondecl", $1, $2, $4, $6); }
 
 Formals: Formals1
 | { $$ = new ParseTree("formals"); }
